@@ -15,4 +15,4 @@ Inofficial EODData  Extension for MoneyMoney
 Add the buying rates in MoneyMoney via right click on the stock to display the profits.
 
 ### Requirements
-You need at least version 2.4.0 or a beta version of MoneyMoney.
+You need at least version 2.4.3 or a beta version of MoneyMoney.
