@@ -48,7 +48,7 @@ function SupportsBank (protocol, bankCode)
 end
 
 function InitializeSession (protocol, bankCode, username, username2, password, username3)
-	stockSymbols = username:gsub("%s+", "")
+        stockSymbols = username:gsub("%s+", "")
 end
 
 function ListAccounts (knownAccounts)
@@ -65,78 +65,80 @@ end
 
 
 function RefreshAccount (account, since)
-	local s = {}
-	
-	-- Create substring with stock information from comma separated input
-	for stock in string.gmatch(stockSymbols, '([^,]+)') do
-		
-		-- Extract Market, Ticker, Quantity and Currency from substring
-		-- Pattern: NASDAQ/AAPL(10)[USD],TSX/APHA(100)[CAD]
-		stockURI=stock:match("([^(]+)")
-		stockMarket=stock:match("([^/]+)")
-		stockTicker=stock:match("%/(%S+)%(")
-		stockQuantity=stock:match("%((%S+)%)")
-		stockCurrency=stock:match("%[(%S+)%]")
-		
-		-- Retrieve HTML from EODData as a basis for extracting price and name	
-		stockHtml = requestCurrentStockDataHtml(stockURI)
-	
-		-- Create new stock item and put is to the list
-		s[#s+1] = {
-			name = requestCurrentStockName(stockHtml),
-			securityNumber = stockTicker,
-			market = stockMarket,
-			currency = nil,
-			quantity = stockQuantity,
-			price = requestCurrentStockPrice(stockHtml),
-			currencyOfPrice = stockCurrency,
-			exchangeRate = requestCurrentExchangeRate(stockCurrency)
-		}
-	
-	end
-	
-	return {securities = s}
+        local s = {}
+
+        -- Create substring with stock information from comma separated input
+        for stock in string.gmatch(stockSymbols, '([^,]+)') do
+
+                -- Extract Market, Ticker, Quantity and Currency from substring
+                -- Pattern: NASDAQ/AAPL(10)[USD],TSX/APHA(100)[CAD]
+                stockURI=stock:match("([^(]+)")
+                stockMarket=stock:match("([^/]+)")
+                stockTicker=stock:match("%/(%S+)%(")
+                stockQuantity=stock:match("%((%S+)%)")
+                stockCurrency=stock:match("%[(%S+)%]")
+
+                -- Retrieve HTML from EODData as a basis for extracting price and name
+                stockHtml = requestCurrentStockDataHtml(stockURI)
+
+                -- Create new stock item and put is to the list
+                s[#s+1] = {
+                        name = requestCurrentStockName(stockHtml),
+                        securityNumber = stockTicker,
+                        market = stockMarket,
+                        currency = nil,
+                        quantity = stockQuantity,
+                        price = requestCurrentStockPrice(stockHtml),
+                        currencyOfPrice = stockCurrency,
+                        exchangeRate = requestCurrentExchangeRate(stockCurrency)
+                }
+
+        end
+
+        return {securities = s}
 end
 
 
 function EndSession ()
-	connection:close()
+        connection:close()
 end
 
 
 
 -- Query Functions
 function requestCurrentStockDataHtml(stockSymbol)
-	return HTML(connection:request("GET", stockDataRequestUrl(stockSymbol)))
+        return HTML(connection:request("GET", stockDataRequestUrl(stockSymbol)))
 end
 
 function requestCurrentStockName(stockDataHtml)
-	-- Extract stock name from html input with xpath
-	return stockDataHtml:xpath("//div[@id='ctl00_cph1_qp1_div1']/div[1]/div/div/div/table/tr/td[2]"):text()
+        -- Extract stock name from html input with xpath
+        return stockDataHtml:xpath("//div[@id='ctl00_cph1_qp1_div1']/div[1]/div/div/div/table/tr/td[2]"):text()
 end
 
 function requestCurrentStockPrice(stockDataHtml)
-	-- Extract stock price from html input with xpath
-	return tonumber(stockDataHtml:xpath("//div[@id='ctl00_cph1_qp1_div1']/div[2]/table/tr[1]/td[1]/b"):text())
+        -- Extract stock price from html input with xpath
+        return tonumber(stockDataHtml:xpath("//div[@id='ctl00_cph1_qp1_div1']/div[2]/table/tr[1]/td[1]/b"):text())
 end
 
 function requestCurrentExchangeRate(stockCurrency)
-	if (stockCurrency == "EUR") or (stockCurrency == nil)
-	then
-		return 1
-	else
-	    response = connection:request("GET", exchangeRateRequestUrl(stockCurrency), {})
-	    json = JSON(response)
-	    return json:dictionary()["rates"] [stockCurrency]
-	end
+        if (stockCurrency == "EUR") or (stockCurrency == nil)
+        then
+                return 1
+        else
+            response = connection:request("GET", exchangeRateRequestUrl(stockCurrency), {})
+            json = JSON(response)
+            return json:dictionary()["rates"] [stockCurrency]
+        end
 end
 
 
 -- URL Helper Functions
 function stockDataRequestUrl(stockSymbol)
-	return "http://eoddata.com/stockquote/" .. stockSymbol .. ".htm"
+        return "http://eoddata.com/stockquote/" .. stockSymbol .. ".htm"
 end
 
 function exchangeRateRequestUrl(stockCurrency)
-	return "https://api.exchangeratesapi.io/latest?symbols=" .. stockCurrency
+        return "https://api.exchangeratesapi.io/latest?symbols=" .. stockCurrency
 end
+
+-- SIGNATURE: MCwCFDnjUB9GWtBlq8FJaQa93w4+9veDAhR12e+h/SWbJVisyJo5dyJ6iVMLKw==
