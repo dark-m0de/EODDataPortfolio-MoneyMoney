@@ -121,13 +121,12 @@ function requestCurrentStockPrice(stockDataHtml)
 end
 
 function requestCurrentExchangeRate(stockCurrency)
-        if (stockCurrency == "EUR") or (stockCurrency == nil)
+        if (stockCurrency == currency) or (stockCurrency == nil)
         then
                 return 1
         else
-            response = connection:request("GET", exchangeRateRequestUrl(stockCurrency), {})
-            json = JSON(response)
-            return json:dictionary()["rates"] [stockCurrency]
+            currencyDataHtml = HTML(connection:request("GET", exchangeRateRequestUrl(stockCurrency)))
+                        return requestCurrentStockPrice(currencyDataHtml)
         end
 end
 
@@ -138,7 +137,7 @@ function stockDataRequestUrl(stockSymbol)
 end
 
 function exchangeRateRequestUrl(stockCurrency)
-        return "https://api.exchangeratesapi.io/latest?symbols=" .. stockCurrency
+        return "http://www.eoddata.com/stockquote/FOREX/EUR" .. stockCurrency .. ".htm"
 end
 
--- SIGNATURE: MCwCFDnjUB9GWtBlq8FJaQa93w4+9veDAhR12e+h/SWbJVisyJo5dyJ6iVMLKw==
+-- SIGNATURE: MC0CFGvx9RwQ1vWJczNFTfLJ1Pr/ew18AhUAkOU6ev6KDep4oMPy0B81NHmDXgM=
