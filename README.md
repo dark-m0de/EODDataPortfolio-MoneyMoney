@@ -1,9 +1,8 @@
 # EODDataPortfolio-MoneyMoney
 Inofficial EODData  Extension for MoneyMoney
 
-![MoneyMoney screenshot with EODDataPortfolio Balance](EODDataPortfolio-screen.png)
-
-![MoneyMoney screenshot with EODDataPortfolio Configuration](EODDataPortfolio-config.png)
+<img src="EODDataPortfolio-screen.png" alt="MoneyMoney screenshot with EODDataPortfolio Balance" width="1000"/>
+<img src="EODDataPortfolio-config.png" alt="MoneyMoney screenshot with EODDataPortfolio Configuration" width="400" align="middle"/>
 
 ## Setup
 
