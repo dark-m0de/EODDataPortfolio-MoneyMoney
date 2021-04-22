@@ -33,7 +33,7 @@
 
 
 WebBanking{
-  version = 1.0,
+  version = 1.3,
   country = "de",
   description = "Include your stock portfolio in MoneyMoney by providing the stock symbols, the number of shares and the currency as username. Example: NASDAQ/AAPL(10)[USD],TSX/APHA(100)[CAD]",
   services= { "EODDataPortfolio" }
@@ -117,7 +117,8 @@ end
 
 function requestCurrentStockPrice(stockDataHtml)
         -- Extract stock price from html input with xpath
-        return tonumber(stockDataHtml:xpath("//div[@id='ctl00_cph1_qp1_div1']/div[2]/table/tr[1]/td[1]/b"):text())
+                price = string.gsub(stockDataHtml:xpath("//div[@id='ctl00_cph1_qp1_div1']/div[2]/table/tr[1]/td[1]/b"):text(),",","")
+        return tonumber (price)
 end
 
 function requestCurrentExchangeRate(stockCurrency)
@@ -137,7 +138,7 @@ function stockDataRequestUrl(stockSymbol)
 end
 
 function exchangeRateRequestUrl(stockCurrency)
-        return "http://www.eoddata.com/stockquote/FOREX/EUR" .. stockCurrency .. ".htm"
+        return "http://eoddata.com/stockquote/FOREX/EUR" .. stockCurrency .. ".htm"
 end
 
--- SIGNATURE: MC0CFGvx9RwQ1vWJczNFTfLJ1Pr/ew18AhUAkOU6ev6KDep4oMPy0B81NHmDXgM=
+-- SIGNATURE: MCwCFDqMaHJT2EBf5E3QlMDgyLIO5teNAhQFJoGrIJ/VNlKiM5fjRe6nVACoEA==
