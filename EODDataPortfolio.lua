@@ -33,7 +33,7 @@
 
 
 WebBanking{
-  version = 1.3,
+  version = 1.4,
   country = "de",
   description = "Include your stock portfolio in MoneyMoney by providing the stock symbols, the number of shares and the currency as username. Example: NASDAQ/AAPL(10)[USD],TSX/APHA(100)[CAD]",
   services= { "EODDataPortfolio" }
@@ -90,7 +90,8 @@ function RefreshAccount (account, since)
                         quantity = stockQuantity,
                         price = requestCurrentStockPrice(stockHtml),
                         currencyOfPrice = stockCurrency,
-                        exchangeRate = requestCurrentExchangeRate(stockCurrency)
+                        exchangeRate = requestCurrentExchangeRate(stockCurrency),
+                        amount = (stockQuantity * requestCurrentStockPrice(stockHtml)) / requestCurrentExchangeRate(stockCurrency)
                 }
 
         end
@@ -134,11 +135,11 @@ end
 
 -- URL Helper Functions
 function stockDataRequestUrl(stockSymbol)
-        return "http://eoddata.com/stockquote/" .. stockSymbol .. ".htm"
+        return "https://eoddata.com/stockquote/" .. stockSymbol .. ".htm"
 end
 
 function exchangeRateRequestUrl(stockCurrency)
-        return "http://eoddata.com/stockquote/FOREX/EUR" .. stockCurrency .. ".htm"
+        return "https://eoddata.com/stockquote/FOREX/EUR" .. stockCurrency .. ".htm"
 end
 
--- SIGNATURE: MCwCFDqMaHJT2EBf5E3QlMDgyLIO5teNAhQFJoGrIJ/VNlKiM5fjRe6nVACoEA==
+-- SIGNATURE: MC0CFCOjVkIRG6VtbvTTkVHERvVQWd3kAhUAiux7DqYOnZq5GETpTEHEQp6gkXw=
