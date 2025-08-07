@@ -142,4 +142,4 @@ function exchangeRateRequestUrl(stockCurrency)
         return "https://eoddata.com/stockquote/FOREX/EUR" .. stockCurrency .. ".htm"
 end
 
--- SIGNATURE: MC0CFCOjVkIRG6VtbvTTkVHERvVQWd3kAhUAiux7DqYOnZq5GETpTEHEQp6gkXw=
+-- SIGNATURE: MCwCFAmdq8G9Kp2f8WjkD3qzDoRnfHQMAhQ+jP4BV+D5ilaPv+meQ9TV+RdD/g==
