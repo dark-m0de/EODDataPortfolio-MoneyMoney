@@ -33,7 +33,7 @@
 
 
 WebBanking{
-  version = 1.4,
+  version = 1.5,
   country = "de",
   description = "Include your stock portfolio in MoneyMoney by providing the stock symbols, the number of shares and the currency as username. Example: NASDAQ/AAPL(10)[USD],TSX/APHA(100)[CAD]",
   services= { "EODDataPortfolio" }
@@ -113,12 +113,12 @@ end
 
 function requestCurrentStockName(stockDataHtml)
         -- Extract stock name from html input with xpath
-        return stockDataHtml:xpath("//div[@id='ctl00_cph1_qp1_div1']/div[1]/div/div/div/table/tr/td[2]"):text()
+        return stockDataHtml:xpath('//*[@id="cph1_qp1_header_divText"]'):text()
 end
 
 function requestCurrentStockPrice(stockDataHtml)
         -- Extract stock price from html input with xpath
-                price = string.gsub(stockDataHtml:xpath("//div[@id='ctl00_cph1_qp1_div1']/div[2]/table/tr[1]/td[1]/b"):text(),",","")
+                price = string.gsub(stockDataHtml:xpath('//*[@id="cph1_qp1_div1"]/table/tbody/tr[1]/td[1]/h2'):text(),",","")
         return tonumber (price)
 end
 
